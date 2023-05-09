@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Hola mundo');
+  res.send('Hola a todos');
 });
 
 // creamos un usuario y lo guardamos en la base de datos, el servidor
