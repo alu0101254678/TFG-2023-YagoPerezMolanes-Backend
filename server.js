@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 app.post("/signUp", async (req, res) => {
   const {email, name, password} = req.body;
   
-  const userName = User.findOne({name});
-  const Email = User.findOne({email});
+  const userName = await User.findOne({name});
+  const Email = await User.findOne({email});
   if (userName || Email) {
     return res.status(401).send("The username or email already exists");
   } else {
