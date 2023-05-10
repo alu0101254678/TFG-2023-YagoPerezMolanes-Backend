@@ -27,5 +27,5 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0"
   },
-  "type": "module"
+  "type": "commonjs"
 }
