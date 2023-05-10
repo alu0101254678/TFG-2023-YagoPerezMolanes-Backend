@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const pathSchema = new Schema({
+const pathSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
@@ -19,4 +19,4 @@ const pathSchema = new Schema({
   meanAltitude: { type: Number, required: true },
 });
 
-export default model("Path", pathSchema);
+module.exports = mongoose.model("Path", pathSchema);

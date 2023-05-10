@@ -1,15 +1,15 @@
-import express, { json } from "express";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
-import User from "./models/user";
-import Path from "./models/path";
-import { sign } from "jsonwebtoken";
+const User = require("./models/user");
+const Path = require("./models/path");
+const jwt = require("jsonwebtoken");
 
 // importamos el fichero de conexion con la base de datos
-import "./database";
+require("./database");
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hola a todos');
@@ -21,7 +21,7 @@ app.post("/signUp", async (req, res) => {
   const {email, name, password} = req.body;
   const newUser = new User({email: email, name: name, password: password});
   await newUser.save();
-  const token = sign({_id: newUser._id}, "secretkey");
+  const token = jwt.sign({_id: newUser._id}, "secretkey");
   res.status(200).json({token: token});
 
   // console.log(newUser);
@@ -37,7 +37,7 @@ app.post("/signIn", async (req, res) => {
     return res.status(401).send("Wrong Password");
   }
 
-  const token = sign({id_: user.id}, "secretkey");
+  const token = jwt.sign({id_: user.id}, "secretkey");
   res.status(200).json({token: token});
 });
 
