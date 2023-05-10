@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
 // esquema para el documento de la base de datos
 // de mongodb referenciado al objeto usuario
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   name: String,
   email: String,
   password: String,
@@ -13,4 +13,4 @@ const userSchema = new mongoose.Schema({
 });
 
 // exporta el modelo creado con el esquema
-module.exports = mongoose.model("User", userSchema);
+export default model("User", userSchema);

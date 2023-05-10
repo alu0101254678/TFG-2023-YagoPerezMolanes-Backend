@@ -1,14 +1,15 @@
-const express = require('express');
-const cors = require("cors");
+import express, { json } from "express";
+import cors from "cors";
 
 const app = express();
-const User = require("./models/user");
-const jwt = require("jsonwebtoken");
+import User from "./models/user";
+import Path from "./models/path";
+import { sign } from "jsonwebtoken";
 
 // importamos el fichero de conexion con la base de datos
-require("./database");
+import "./database";
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 app.get('/', (req, res) => {
   res.send('Hola a todos');
@@ -20,7 +21,7 @@ app.post("/signUp", async (req, res) => {
   const {email, name, password} = req.body;
   const newUser = new User({email: email, name: name, password: password});
   await newUser.save();
-  const token = jwt.sign({_id: newUser._id}, "secretkey");
+  const token = sign({_id: newUser._id}, "secretkey");
   res.status(200).json({token: token});
 
   // console.log(newUser);
@@ -36,8 +37,20 @@ app.post("/signIn", async (req, res) => {
     return res.status(401).send("Wrong Password");
   }
 
-  const token = jwt.sign({id_: user.id}, "secretkey");
+  const token = sign({id_: user.id}, "secretkey");
   res.status(200).json({token: token});
+});
+
+app.post('/paths', async (req, res) => {
+  const { userId, path, duration, averageSpeed, meanAltitude } = req.body;
+
+  try {
+    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude });
+    await newPath.save();
+    res.status(200).json(newPath);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 
