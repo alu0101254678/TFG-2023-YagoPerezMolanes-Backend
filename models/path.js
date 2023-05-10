@@ -17,6 +17,8 @@ const pathSchema = new mongoose.Schema({
   duration: { type: Number, required: true },
   averageSpeed:  { type: Number, required: true },
   meanAltitude: { type: Number, required: true },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model("Path", pathSchema);

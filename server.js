@@ -19,20 +19,27 @@ app.get('/', (req, res) => {
 // devuelve un token que es lo que usara la aplicacion cliente
 app.post("/signUp", async (req, res) => {
   const {email, name, password} = req.body;
-  const newUser = new User({email: email, name: name, password: password});
-  await newUser.save();
-  const token = jwt.sign({_id: newUser._id}, "secretkey");
-  res.status(200).json({token: token});
-
+  
+  const userName = User.find({name});
+  const Email = User.find({email});
+  if (userName || Email) {
+    return res.status(401).send("The username or email already exists");
+  } else {
+    const newUser = new User({email: email, name: name, password: password});
+    await newUser.save();
+    const token = jwt.sign({_id: newUser._id}, "secretkey");
+    res.status(200).json({token: token});
+  }
   // console.log(newUser);
 });
+
 
 app.post("/signIn", async (req, res) => {
   const {name, password} = req.body;
   const user = await User.findOne({name});
   if (!user) {
     return res.status(401).send("The username doesn't exists");
-  }
+  };
   if (user.password !== password) {
     return res.status(401).send("Wrong Password");
   }
