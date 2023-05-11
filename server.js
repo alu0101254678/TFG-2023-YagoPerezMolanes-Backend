@@ -22,9 +22,13 @@ app.post("/signUp", async (req, res) => {
   
   const userName = await User.findOne({name});
   const Email = await User.findOne({email});
-  if (userName || Email) {
-    return res.status(401).send("The username or email already exists");
-  } else {
+  if (userName) {
+    return res.status(401).send("El nombre de usuario ya está en uso");
+  }
+  if (Email) {
+    return res.status(401).send("El email ya está en uso");
+  } 
+  else {
     const newUser = new User({email: email, name: name, password: password});
     await newUser.save();
     const token = jwt.sign({_id: newUser._id}, "secretkey");
