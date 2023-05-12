@@ -42,10 +42,10 @@ app.post("/signIn", async (req, res) => {
   const {name, password} = req.body;
   const user = await User.findOne({name});
   if (!user) {
-    return res.status(401).send("The username doesn't exists");
+    return res.status(401).send("El usuario que ha introducido no existe");
   };
   if (user.password !== password) {
-    return res.status(401).send("Wrong Password");
+    return res.status(401).send("Contraseña incorrecta");
   }
 
   const token = jwt.sign({id_: user.id}, "secretkey");
