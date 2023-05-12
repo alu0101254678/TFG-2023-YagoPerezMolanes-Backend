@@ -27,7 +27,24 @@ app.post("/signUp", async (req, res) => {
   }
   if (Email) {
     return res.status(401).send("El email ya está en uso");
-  } 
+  }
+  
+  if (name == '') {
+    return res.status(401).send("El campo de nombre de usuario está vacío");
+  }
+
+  if (email == '') {
+    return res.status(401).send("El campo de email está vacío");
+  }
+
+  if (password == '') {
+    return res.status(401).send("El campo de contraseña está vacío");
+  }
+
+  if (password.length < 4) {
+    return res.status(401).send("La contraseña debe tener un mínimo de 4 caracteres");
+  }
+  
   else {
     const newUser = new User({email: email, name: name, password: password});
     await newUser.save();
