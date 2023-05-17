@@ -81,6 +81,29 @@ app.post('/paths', async (req, res) => {
   }
 });
 
+app.get('/paths', async(req, res) => {
+  const { userId, duration } = req.query;
+
+  try {
+    let query = {};
+
+    if (userId) {
+      query.userId = userId;
+    }
+
+    if (duration) {
+      query.duration = { $lte: duration };
+    }
+
+    const Paths = await Path.find(query);
+    res.status(200).json(Paths);
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ error: error.message});
+  }
+
+});
+
 
 
 const PORT = process.env.PORT || 3000;
