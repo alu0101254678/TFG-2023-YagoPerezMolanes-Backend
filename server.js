@@ -82,10 +82,14 @@ app.post('/paths', async (req, res) => {
 });
 
 app.get('/paths', async(req, res) => {
-  const { startRouteDate, duration } = req.query;
+  const { userId, startRouteDate, duration } = req.query;
 
   try {
     let query = {};
+
+    if (userId) {
+      query.userId = userId;
+    }
 
     if (startRouteDate) {
       query.startRouteDate = startRouteDate;
