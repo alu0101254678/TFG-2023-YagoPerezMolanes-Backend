@@ -70,10 +70,10 @@ app.post("/signIn", async (req, res) => {
 });
 
 app.post('/paths', async (req, res) => {
-  const { userId, path, duration, averageSpeed, meanAltitude, startRouteDate } = req.body;
+  const { userId, path, duration, averageSpeed, meanAltitude } = req.body;
 
   try {
-    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude, startRouteDate });
+    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude });
     await newPath.save();
     res.status(200).json(newPath);
   } catch (err) {
@@ -89,10 +89,6 @@ app.get('/paths', async(req, res) => {
 
     if (userId) {
       query.userId = userId;
-    }
-
-    if (startRouteDate) {
-      query.startRouteDate = startRouteDate;
     }
 
     if (duration) {
