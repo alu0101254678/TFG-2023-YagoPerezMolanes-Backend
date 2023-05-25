@@ -70,10 +70,10 @@ app.post("/signIn", async (req, res) => {
 });
 
 app.post('/paths', async (req, res) => {
-  const { userId, path, duration, averageSpeed, meanAltitude } = req.body;
+  const { userId, path, duration, averageSpeed, meanAltitude, startRouteDate } = req.body;
 
   try {
-    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude });
+    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude, startRouteDate });
     await newPath.save();
     res.status(200).json(newPath);
   } catch (err) {

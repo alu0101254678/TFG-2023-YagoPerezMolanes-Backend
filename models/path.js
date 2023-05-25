@@ -17,6 +17,7 @@ const pathSchema = new mongoose.Schema({
   duration: { type: Number, required: true },
   averageSpeed:  { type: Number, required: true },
   meanAltitude: { type: Number, required: true },
+  startRouteDate: { type: Date, required: true },
 }, {
   timestamps: true,
 });
