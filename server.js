@@ -91,9 +91,9 @@ app.get('/paths', async(req, res) => {
       query.userId = userId;
     }
 
-    if (startRouteDate) {
-      query.startRouteDate = startRouteDate;
-    }
+    // if (startRouteDate) {
+    //   query.startRouteDate = startRouteDate;
+    // }
 
     if (duration) {
       query.duration = { $lte: duration };
