@@ -15,7 +15,7 @@ const pathSchema = new mongoose.Schema({
     required: true
   },
   duration: { type: Number, required: true },
-  averageSpeed:  { type: Number, required: true },
+  averageSpeed:  { type: Number, required: true, default: 0 },
   meanAltitude: { type: Number, required: true },
 }, {
   timestamps: true,
