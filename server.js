@@ -70,10 +70,10 @@ app.post("/signIn", async (req, res) => {
 });
 
 app.post('/paths', async (req, res) => {
-  const { userId, path, duration, averageSpeed, meanAltitude } = req.body;
+  const { userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear } = req.body;
 
   try {
-    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude });
+    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear });
     await newPath.save();
     res.status(200).json(newPath);
   } catch (err) {
@@ -82,13 +82,25 @@ app.post('/paths', async (req, res) => {
 });
 
 app.get('/paths', async(req, res) => {
-  const { userId, startRouteDate, duration } = req.query;
+  const { userId, routeStartDay, routeStartMonth, routeStartYear, duration } = req.query;
 
   try {
     let query = {};
 
     if (userId) {
       query.userId = userId;
+    }
+
+    if (routeStartDay) {
+      query.routeStartDay = routeStartDay;
+    }
+
+    if (routeStartMonth) {
+      query.routeStartMonth = routeStartMonth;
+    }
+
+    if (routeStartYear) {
+      query.routeStartYear = routeStartYear;
     }
 
     if (duration) {
@@ -103,7 +115,6 @@ app.get('/paths', async(req, res) => {
   }
 
 });
-
 
 
 const PORT = process.env.PORT || 3000;
