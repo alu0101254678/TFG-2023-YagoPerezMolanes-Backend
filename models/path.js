@@ -20,6 +20,7 @@ const pathSchema = new mongoose.Schema({
   routeStartDay: { type: Number, required: true },
   routeStartMonth: { type: Number, required: true },
   routeStartYear: { type: Number, required: true},
+  shared: { type: Boolean, required: true, default: false },
 }, {
   timestamps: true,
 });
