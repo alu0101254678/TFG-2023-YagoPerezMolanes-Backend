@@ -81,7 +81,7 @@ app.post('/paths', async (req, res) => {
   }
 });
 
-app.get('/paths', async(req, res) => {
+app.get('/myPaths', async(req, res) => {
   const { userId, routeStartDay, routeStartMonth, routeStartYear, duration } = req.query;
 
   try {
