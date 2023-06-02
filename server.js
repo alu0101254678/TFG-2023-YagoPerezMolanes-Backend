@@ -116,6 +116,22 @@ app.get('/myPaths', async(req, res) => {
 
 });
 
+app.get('/social', async(req, res) => {
+  try {
+    let query = {};
+
+    query.shared = true;
+    
+
+    const Paths = await Path.find(query);
+    res.status(200).json(Paths);
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ error: error.message});
+  }
+
+});
+
 
 const PORT = process.env.PORT || 3000;
 
