@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const pathSchema = new mongoose.Schema({
+  pathName: {
+    type: String,
+    required: true
+  },
   userId: {
     type: String,
     required: true

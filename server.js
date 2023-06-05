@@ -70,10 +70,10 @@ app.post("/signIn", async (req, res) => {
 });
 
 app.post('/paths', async (req, res) => {
-  const { userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared } = req.body;
+  const { pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared } = req.body;
 
   try {
-    const newPath = new Path({ userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared });
+    const newPath = new Path({ pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared });
     await newPath.save();
     res.status(200).json(newPath);
   } catch (err) {
@@ -82,10 +82,14 @@ app.post('/paths', async (req, res) => {
 });
 
 app.get('/myPaths', async(req, res) => {
-  const { userId, routeStartDay, routeStartMonth, routeStartYear, duration } = req.query;
+  const { pathName, userId, routeStartDay, routeStartMonth, routeStartYear, duration } = req.query;
 
   try {
     let query = {};
+
+    if (pathName) {
+      query.pathName = pathName;
+    }
 
     if (userId) {
       query.userId = userId;
