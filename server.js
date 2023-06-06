@@ -1,13 +1,14 @@
-const express = require("express");
-const cors = require("cors");
+/* eslint-disable linebreak-style */
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
-const User = require("./models/user");
-const Path = require("./models/path");
-const jwt = require("jsonwebtoken");
+const User = require('./models/user');
+const Path = require('./models/path');
+const jwt = require('jsonwebtoken');
 
 // importamos el fichero de conexion con la base de datos
-require("./database");
+require('./database');
 app.use(cors());
 app.use(express.json());
 
@@ -17,75 +18,73 @@ app.get('/', (req, res) => {
 
 // creamos un usuario y lo guardamos en la base de datos, el servidor
 // devuelve un token que es lo que usara la aplicacion cliente
-app.post("/signUp", async (req, res) => {
+app.post('/signUp', async (req, res) => {
   const {email, name, password} = req.body;
-  
+
   const userName = await User.findOne({name});
   const Email = await User.findOne({email});
   if (userName) {
-    return res.status(401).send("El nombre de usuario ya está en uso");
+    return res.status(401).send('El nombre de usuario ya está en uso');
   }
   if (Email) {
-    return res.status(401).send("El email ya está en uso");
+    return res.status(401).send('El email ya está en uso');
   }
-  
+
   if (name == '') {
-    return res.status(401).send("El campo de nombre de usuario está vacío");
+    return res.status(401).send('El campo de nombre de usuario está vacío');
   }
 
   if (email == '') {
-    return res.status(401).send("El campo de email está vacío");
+    return res.status(401).send('El campo de email está vacío');
   }
 
   if (password == '') {
-    return res.status(401).send("El campo de contraseña está vacío");
+    return res.status(401).send('El campo de contraseña está vacío');
   }
 
   if (password.length < 4) {
-    return res.status(401).send("La contraseña debe tener un mínimo de 4 caracteres");
-  }
-  
-  else {
+    return res.status(401).send('La contraseña debe tener un mínimo de 4 caracteres');
+  } else {
     const newUser = new User({email: email, name: name, password: password});
     await newUser.save();
-    const token = jwt.sign({_id: newUser._id}, "secretkey");
+    const token = jwt.sign({_id: newUser._id}, 'secretkey');
     res.status(200).json({token: token});
   }
   // console.log(newUser);
 });
 
 
-app.post("/signIn", async (req, res) => {
+app.post('/signIn', async (req, res) => {
   const {name, password} = req.body;
   const user = await User.findOne({name});
   if (!user) {
-    return res.status(401).send("El usuario que ha introducido no existe");
+    return res.status(401).send('El usuario que ha introducido no existe');
   };
   if (user.password !== password) {
-    return res.status(401).send("Contraseña incorrecta");
+    return res.status(401).send('Contraseña incorrecta');
   }
 
-  const token = jwt.sign({id_: user.id}, "secretkey");
+  const token = jwt.sign({id_: user.id}, 'secretkey');
   res.status(200).json({token: token});
 });
 
 app.post('/paths', async (req, res) => {
-  const { pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared } = req.body;
+  const {pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared} = req.body;
 
   try {
-    const newPath = new Path({ pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared });
+    const newPath = new Path({pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared});
     await newPath.save();
     res.status(200).json(newPath);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({error: err.message});
   }
 });
 
-app.get('/myPaths', async(req, res) => {
-  const { pathName, userId, routeStartDay, routeStartMonth, routeStartYear, duration } = req.query;
+app.get('/myPaths', async (req, res) => {
+  const {pathName, userId, routeStartDay, routeStartMonth, routeStartYear, duration} = req.query;
 
   try {
-    let query = {};
+    const query = {};
 
     if (pathName) {
       query.pathName = pathName;
@@ -108,32 +107,30 @@ app.get('/myPaths', async(req, res) => {
     }
 
     if (duration) {
-      query.duration = { $lte: duration };
+      query.duration = {$lte: duration};
     }
 
     const Paths = await Path.find(query);
     res.status(200).json(Paths);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message});
+    res.status(500).json({error: error.message});
   }
-
 });
 
-app.get('/social', async(req, res) => {
+app.get('/social', async (req, res) => {
   try {
-    let query = {};
+    const query = {};
 
     query.shared = true;
-    
+
 
     const Paths = await Path.find(query);
     res.status(200).json(Paths);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message});
+    res.status(500).json({error: error.message});
   }
-
 });
 
 

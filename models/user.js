@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+/* eslint-disable linebreak-style */
+const mongoose = require('mongoose');
 
 // esquema para el documento de la base de datos
 // de mongodb referenciado al objeto usuario
@@ -13,4 +14,4 @@ const userSchema = new mongoose.Schema({
 });
 
 // exporta el modelo creado con el esquema
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
