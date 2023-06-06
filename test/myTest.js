@@ -36,7 +36,7 @@ describe('Pruebas de la aplicación', () => {
     chai
       .request(app)
       .post('/signUp')
-      .send({ email: 'test@example.com', name: 'testuser', password: 'password' })
+      .send({ email: 'test1@example.com', name: 'testuser1', password: 'password' })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');
