@@ -69,14 +69,20 @@ describe('Pruebas de la aplicación', () => {
             {
               'latitude': 40.712776,
               'longitude': -74.005974,
+              'speed': 7,
+              'altitude': 50,
             },
             {
               'latitude': 40.758701,
               'longitude': -73.978380,
+              'speed': 7,
+              'altitude': 50,
             },
             {
               'latitude': 40.719574,
               'longitude': -74.042106,
+              'speed': 7,
+              'altitude': 50,
             },
           ],
           duration: 100,

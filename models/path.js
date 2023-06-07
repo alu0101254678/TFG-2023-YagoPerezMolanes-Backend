@@ -15,6 +15,8 @@ const pathSchema = new mongoose.Schema({
       {
         latitude: {type: Number, required: true},
         longitude: {type: Number, required: true},
+        speed: {type: Number, required: true},
+        altitude: {type: Number, required: true},
       },
     ],
     required: true,
