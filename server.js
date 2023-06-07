@@ -70,13 +70,16 @@ app.post('/signIn', async (req, res) => {
 
 app.post('/paths', async (req, res) => {
   const {pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared} = req.body;
+  const newPath = new Path({pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared});
 
   try {
-    const newPath = new Path({pathName, userId, path, duration, averageSpeed, meanAltitude, routeStartDay, routeStartMonth, routeStartYear, shared});
     await newPath.save();
     res.status(200).json(newPath);
   } catch (err) {
-    res.status(500).json({error: err.message});
+    if (newPath.pathName == '') {
+      return res.status(401).send('Debe aportar un nombre a la ruta');
+    }
+    return res.status(500).json({error: err.message});
   }
 });
 
@@ -114,7 +117,7 @@ app.get('/myPaths', async (req, res) => {
     res.status(200).json(Paths);
   } catch (error) {
     console.error(error);
-    res.status(500).json({error: error.message});
+    return res.status(500).json({error: error.message});
   }
 });
 
@@ -129,7 +132,7 @@ app.get('/social', async (req, res) => {
     res.status(200).json(Paths);
   } catch (error) {
     console.error(error);
-    res.status(500).json({error: error.message});
+    return res.status(500).json({error: error.message});
   }
 });
 
