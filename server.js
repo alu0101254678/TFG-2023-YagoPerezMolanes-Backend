@@ -117,6 +117,7 @@ app.get('/myPaths', async (req, res) => {
 
     if (routeStartYear) {
       if (!Number.isInteger(parseInt(routeStartYear))) {
+        console.log('pepe');
         return res.status(401).json({error: 'El año de inicio de la ruta debe ser un número entero'});
       }
       query.routeStartYear = routeStartYear;
