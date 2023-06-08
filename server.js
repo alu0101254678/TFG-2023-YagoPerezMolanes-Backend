@@ -102,31 +102,18 @@ app.get('/myPaths', async (req, res) => {
     }
 
     if (routeStartDay) {
-      if (!Number.isInteger(parseInt(routeStartDay))) {
-        return res.status(401).json({error: 'El día de inicio de la ruta debe ser un número entero'});
-      }
       query.routeStartDay = routeStartDay;
     }
 
     if (routeStartMonth) {
-      if (!Number.isInteger(parseInt(routeStartMonth))) {
-        return res.status(401).json({error: 'El mes de inicio de la ruta debe ser un número entero'});
-      }
       query.routeStartMonth = routeStartMonth;
     }
 
     if (routeStartYear) {
-      if (!Number.isInteger(parseInt(routeStartYear))) {
-        console.log('pepe');
-        return res.status(401).json({error: 'El año de inicio de la ruta debe ser un número entero'});
-      }
       query.routeStartYear = routeStartYear;
     }
 
     if (duration) {
-      if (!Number.isInteger(parseInt(duration))) {
-        return res.status(401).json({error: 'La duración de la ruta debe ser un número entero'});
-      }
       query.duration = {$lte: duration};
     }
 
