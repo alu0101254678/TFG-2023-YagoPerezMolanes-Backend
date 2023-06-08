@@ -79,6 +79,10 @@ app.post('/paths', async (req, res) => {
     if (newPath.pathName == '') {
       return res.status(401).send('Debe aportar un nombre a la ruta');
     }
+
+    if (newPath.userId == '') {
+      return res.status(401).send('Debe iniciar sesión antes de guardar una ruta');
+    }
     return res.status(500).json({error: err.message});
   }
 });
