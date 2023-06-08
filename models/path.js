@@ -56,6 +56,10 @@ const pathSchema = new mongoose.Schema({
     },
   },
   shared: {type: Boolean, required: true, default: false},
+  maxSpeed: {type: Number, required: true},
+  minSpeed: {type: Number, required: true},
+  maxAltitude: {type: Number, required: true},
+  minAltitude: {type: Number, required: true},
 }, {
   timestamps: true,
 });
