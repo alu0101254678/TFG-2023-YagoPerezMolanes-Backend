@@ -140,6 +140,26 @@ app.get('/social', async (req, res) => {
   }
 });
 
+app.delete('/paths/:id', async (req, res) => {
+  const {id} = req.params;
+
+  try {
+    // Verificar si la ruta existe
+    const path = await Path.findById(id);
+    if (!path) {
+      return res.status(404).send('La ruta no existe');
+    }
+
+    // Eliminar la ruta
+    await Path.findByIdAndDelete(id);
+
+    res.status(200).send('Ruta eliminada exitosamente');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({error: error.message});
+  }
+});
+
 
 const PORT = process.env.PORT || 3000;
 
