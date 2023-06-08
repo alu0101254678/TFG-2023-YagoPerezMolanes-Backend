@@ -21,12 +21,40 @@ const pathSchema = new mongoose.Schema({
     ],
     required: true,
   },
-  duration: {type: Number, required: true},
+  duration: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} no es un número entero',
+    },
+  },
   averageSpeed: {type: Number, required: true, default: 0},
   meanAltitude: {type: Number, required: true},
-  routeStartDay: {type: Number, required: true},
-  routeStartMonth: {type: Number, required: true},
-  routeStartYear: {type: Number, required: true},
+  routeStartDay: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} no es un número entero',
+    },
+  },
+  routeStartMonth: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} no es un número entero',
+    },
+  },
+  routeStartYear: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} no es un número entero',
+    },
+  },
   shared: {type: Boolean, required: true, default: false},
 }, {
   timestamps: true,
