@@ -156,7 +156,7 @@ app.delete('/paths/:id', async (req, res) => {
     res.status(200).send('Ruta eliminada exitosamente');
   } catch (error) {
     console.error(error);
-    return res.status(500).json({error: error.message});
+    return res.status(500).json({error: 'hola'});
   }
 });
 
