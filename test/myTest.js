@@ -122,4 +122,20 @@ describe('Pruebas de la aplicación', () => {
           done();
         });
   });
+
+  it('PUT /paths/:id Debería editar el nombre y la privacidad de una ruta existente', (done) => {
+    chai.request(server)
+        .put('/paths/:id') // Reemplaza ":id" con el ID de una ruta existente
+        .send({
+          pathName: 'Nuevo nombre de la ruta',
+          shared: true, // Cambia a false si quieres que sea una ruta privada
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body.pathName).to.equal('Nuevo nombre de la ruta');
+          expect(res.body.shared).to.equal(true);
+          done();
+        });
+  });
 });

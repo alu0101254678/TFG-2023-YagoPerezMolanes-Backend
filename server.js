@@ -160,6 +160,29 @@ app.delete('/paths/:id', async (req, res) => {
   }
 });
 
+app.put('/paths/:id', async (req, res) => {
+  const {id} = req.params;
+  const {pathName, shared} = req.body;
+
+  try {
+    // Verificar si la ruta existe
+    const path = await Path.findById(id);
+    if (!path) {
+      return res.status(404).send('La ruta no existe');
+    }
+
+    // Actualizar el nombre y la privacidad de la ruta
+    path.pathName = pathName;
+    path.shared = shared;
+    await path.save();
+
+    return res.status(200).json(path);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({error: error.message});
+  }
+});
+
 
 const PORT = process.env.PORT || 3000;
 
