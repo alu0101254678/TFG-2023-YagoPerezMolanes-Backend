@@ -42,6 +42,12 @@ app.post('/signUp', async (req, res) => {
     return res.status(401).send('El campo de contraseña está vacío');
   }
 
+  // Validar la sintaxis del correo utilizando una expresión regular
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(401).send('El correo proporcionado no es válido');
+  }
+
   if (password.length < 4) {
     return res.status(401).send('La contraseña debe tener un mínimo de 4 caracteres');
   } else {
