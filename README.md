@@ -5,3 +5,5 @@
 ## URLS del proyecto
 
 * [https://trick-tracking-app-backend.herokuapp.com/]( https://trick-tracking-app-backend.herokuapp.com/)
+
+NodeJS: 16.20.0, npm: 8.19.4
